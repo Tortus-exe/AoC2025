@@ -1,7 +1,7 @@
 mod day1;
 
 use clap::Parser;
-use day1::{d1p1};
+use day1::{d1p1, d1p2};
 use std::{fs, error::Error, path::PathBuf};
 
 #[derive(Parser, Debug)]
@@ -16,7 +16,7 @@ struct Args {
 }
 
 const INPUT_FILES: [[&str;2]; 1] = [
-    ["d1p1", "d1p2"]
+    ["d1p1", "d1p1"]
 ];
 const INPUT_DIR: &str = "./inputs";
 
@@ -35,6 +35,9 @@ fn main() -> Result<(), Box<dyn Error>> {
     match (args.day, args.part) {
         (1, 1) => {
             println!("{}", d1p1(msg)?);
+        }
+        (1, 2) => {
+            println!("{}", d1p2(msg)?);
         }
         _ => {
             println!("day {} part {} is not available!", args.day, args.part);

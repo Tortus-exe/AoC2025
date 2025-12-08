@@ -54,6 +54,21 @@ pub fn d1p1(input: String) -> Result<u32, Box<dyn Error>> {
         let newcount = if newsum == 0 { count + 1 } else { count };
         (newsum, newcount)
     });
-    // println!("{:?}", parsedInput);
+    Ok(count)
+}
+
+pub fn d1p2(input: String) -> Result<u32, Box<dyn Error>> {
+    let parsed_input = d1p1_parseinput(&input)?;
+    let (_, count): (i32, u32) = parsed_input.iter().fold((DAY1DIALSTART, 0u32), |(sum, count), val| {
+        let newsum = match val {
+            Move::L(s) => (((sum - *s as i32) % DAY1DIALSIZE) + DAY1DIALSIZE) % DAY1DIALSIZE,
+            Move::R(s) => (sum + *s as i32) % DAY1DIALSIZE,
+        };
+        let newcount = match val {
+            Move::L(s) => count + (((*s as i32 + (DAY1DIALSIZE - sum) % DAY1DIALSIZE)) / DAY1DIALSIZE) as u32,
+            Move::R(s) => count + ((*s as i32 + sum) / DAY1DIALSIZE) as u32,
+        };
+        (newsum, newcount)
+    });
     Ok(count)
 }
